@@ -1,38 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+}
+
 .App {
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.TopChatPagePanel {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 96%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ExitButton {
+    background-image: url("./images/on-off-button.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.AddChatComponent {
+    display: flex;
+    gap: 5px;
+    width: 85%;
 }
 
-.App-link {
-  color: #61dafb;
+#AddChatInput {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#AddChatButton {
+    width: calc(30% - 20px);
+    padding: 8px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.ChatList {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+
+.Chat {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #e9e9e9;
+    }
+}
+
+.ChatPage{
+
+}
+
+.TopChatPanel{
+
+}
+
+.ToChatListButton {
+
+}
+
+.ChatIdName{
+
+}
+
+.MessagesPanel{
+
+}
+
+.Message{
+
+}
+
+.user_message{
+
+}
+
+.interlocutor_message{
+
+}
+
+.InputPanel{
+
+}
+
+.MessageInput{
+
+}
+
+.SendMessageButton{
+
 }
