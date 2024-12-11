@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #f0f0f0;
@@ -11,7 +11,8 @@ body {
 .App {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 .TopChatPagePanel {
@@ -87,15 +88,35 @@ body {
 }
 
 .ChatPage{
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 .TopChatPanel{
-
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 96%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ToChatListButton {
-
+    background-image: url("./images/arrow.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 .ChatIdName{
@@ -119,13 +140,29 @@ body {
 }
 
 .InputPanel{
-
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    width: 96%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2%;
+    display: flex;
+    align-items: center;
 }
 
-.MessageInput{
-
+#MessageInput{
+    height: 40px;
+    border: none;
+    width: 100%;
 }
 
-.SendMessageButton{
-
+#SendMessageButton{
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
 }
