@@ -4,7 +4,7 @@ import ChatList from "./ChatListPageFolder/ChatList";
 
 const ChatListPage = () => {
 
-	// Это тоже не тебе иди в TopChatPagePanel.jsx, это в папке ChatListPageFolder
+	// Это тоже не тебе иди в TopChatPagePanel.jsx, это в папке pages/ChatListPageFolder
 
 	return (
 		<div className="ChatListPage">
