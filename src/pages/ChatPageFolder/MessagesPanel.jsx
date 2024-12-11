@@ -4,7 +4,9 @@ import Message from "./Message";
 
 const MessagesPanel = () => {
 
-	const usersDivRef = useRef(null);
+	// Ура! Работа, специально для тебя, ну тут и без комментов всё ясно, делай что нужно и открывай Message.jsx
+
+	const messagesDivRef = useRef(null);
 	const socket = useRef(null);
 
 	useEffect(() => {
@@ -17,16 +19,17 @@ const MessagesPanel = () => {
 		socket.current.onmessage = function (event) {
 			const data = JSON.parse(event.data);
 			if (data.type === "messages") {
-				usersDivRef.current.replaceChildren()
+				messagesDivRef.current.replaceChildren()
 				data.messages.forEach(message => {
-					if (usersDivRef.current) {
+					if (messagesDivRef.current) {
 						const chatComponent = React.createElement(Message, {messageText: message.messageText}, null);
 						if (message.userId === Cookies.get('address')) {
 							Message.classList.add("user_message");
 						} else {
 							Message.classList.add("interlocutor_message");
 						}
-						usersDivRef.current.appendChild(chatComponent);
+						messagesDivRef.current.appendChild(chatComponent);
+						messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
 					}
 				});
 			}
@@ -50,7 +53,7 @@ const MessagesPanel = () => {
 	}, []);
 
 	return (
-		<div className="MessageesPanel" ref={usersDivRef}>
+		<div className="MessagesPanel" ref={messagesDivRef}>
 			<Message className="user_message" messageText="Привет"/>
 			<Message className="interlocutor_message" messageText="Как дела?"/>
 		</div>

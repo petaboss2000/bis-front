@@ -2,6 +2,9 @@ import React, {useState} from "react";
 
 const AddChatComponent = () => {
 
+	// Ооо... Радуйся.ю наконец-то работа для тебя, тут всё просто запрос видишь? Подправь
+	// Следующее сообщение в ExitButton.jsx
+
 	const [addUser, setAddUser] = useState("");
 
 	const addChat = () => {

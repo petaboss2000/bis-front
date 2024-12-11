@@ -8,6 +8,8 @@ import InputPanel from "./ChatPageFolder/InputPanel";
 
 const ChatPage = () => {
 
+	// База, опять никакой работы для тебя, жду тебя в TopChayPanel.jsx, она в ChatPageFolder
+
 	const chatID = useParams();
 
 	return (
