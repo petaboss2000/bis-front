@@ -2,6 +2,7 @@ import './App.css';
 import ChatListPage from './pages/ChatListPage';
 import ChatPage from './pages/ChatPage';
 import SignInPage from './pages/SignInPage';
+import LogInPage from './pages/LogInPage';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 					<Route path="/" element={<ChatListPage/>}/>
 					<Route path="/chat/:chat_id" element={<ChatPage />} />
 					<Route path="/signIn" element={<SignInPage />} />
+					<Route path="/logIn" element={<LogInPage />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
