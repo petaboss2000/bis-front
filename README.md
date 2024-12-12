@@ -1,70 +1,153 @@
-# Getting Started with Create React App
+# Подключение API через WebSocket и HTTP к компонентам MessagesPanel, InputPanel, AddChatComponent и ChatList
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание компонентов
 
-## Available Scripts
+### MessagesPanel
+Этот компонент отображает список сообщений в панели чата. Использует WebSocket для получения сообщений в реальном времени и обновления интерфейса.
 
-In the project directory, you can run:
+### InputPanel
+Компонент для ввода и отправки сообщений. Отправляет данные на сервер через WebSocket.
 
-### `npm start`
+### AddChatComponent
+Компонент для добавления нового пользователя в чат. Выполняет POST-запрос на сервер через API.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ChatList
+Компонент отображает список чатов. Использует WebSocket для получения списка чатов в реальном времени.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Шаги подключения API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Запуск WebSocket сервера
+Перед использованием компонентов убедитесь, что сервер WebSocket запущен и доступен по адресу `ws://localhost:5000/ws`.
 
-### `npm run build`
+### 2. Настройка WebSocket в компонентах
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### MessagesPanel
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. В файле `MessagesPanel.jsx` создается WebSocket подключение:
+   ```javascript
+   socket.current = new WebSocket("http://localhost:5000/ws");
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. WebSocket обрабатывает следующие события:
+    - `onopen`: Уведомляет об успешном подключении.
+    - `onmessage`: Получает сообщения и обновляет DOM элемент с использованием компонента `Message`.
+    - `onclose` и `onerror`: Обрабатывают закрытие и ошибки подключения.
 
-### `npm run eject`
+3. Сообщения классифицируются по ID пользователя (cookies).
+   ```javascript
+   if (message.userId === Cookies.get('address')) {
+       Message.classList.add("user_message");
+   } else {
+       Message.classList.add("interlocutor_message");
+   }
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### InputPanel
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. В файле `InputPanel.jsx` WebSocket подключается аналогично:
+   ```javascript
+   socket.current = new WebSocket("http://localhost:5000/ws");
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Отправка сообщения реализована через метод `sendMessage`:
+   ```javascript
+   const sendMessage = () => {
+       if (!message.trim()) return;
+       if (socket.current && socket.current.readyState === WebSocket.OPEN) {
+           socket.current.send(JSON.stringify({
+               type: "massage",
+               user_id: `${Cookies.get('address')}`,
+               text: `${message}`
+           }));
+           setMessage("");
+       }
+   };
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### AddChatComponent
 
-## Learn More
+1. В файле `AddChatComponent.jsx` используется метод `fetch` для добавления нового пользователя:
+   ```javascript
+   const addChat = () => {
+       fetch('http://127.0.0.1:5000/addUser', {
+           mode: "no-cors",
+           method: 'POST',
+           body: JSON.stringify({address: addUser}),
+       });
+   };
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Функция `addChat` отправляет POST-запрос с адресом нового пользователя на сервер API.
+3. Используется состояние (`useState`) для управления вводом адреса пользователя.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### ChatList
 
-### Code Splitting
+1. В файле `ChatList.jsx` создается WebSocket подключение:
+   ```javascript
+   socket.current = new WebSocket("http://localhost:5000/ws");
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. WebSocket обрабатывает события:
+    - `onopen`: Подтверждает установку соединения.
+    - `onmessage`: Получает список чатов и обновляет DOM, создавая элементы `Chat`.
+   ```javascript
+   socket.current.onmessage = function (event) {
+       const data = JSON.parse(event.data);
+       if (data.type === "chats") {
+           usersDivRef.current.replaceChildren()
+           data.chats.forEach(chat => {
+               if (usersDivRef.current) {
+                   const chatComponent = React.createElement(Chat, {chat_id: chat.chat_id}, null);
+                   usersDivRef.current.appendChild(chatComponent);
+               }
+           });
+       }
+   };
+   ```
 
-### Analyzing the Bundle Size
+3. Чаты обновляются в реальном времени с использованием полученных данных.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Примеры API сообщений
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Формат входящих сообщений (для MessagesPanel):
+```json
+{
+  "type": "messages",
+  "messages": [
+    {"userId": "123", "messageText": "Привет"},
+    {"userId": "456", "messageText": "Как дела?"}
+  ]
+}
+```
 
-### Advanced Configuration
+### Формат исходящих сообщений (для InputPanel):
+```json
+{
+  "type": "massage",
+  "user_id": "123",
+  "text": "Ваш текст сообщения"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Формат запроса для AddChatComponent:
+```json
+{
+  "address": "новый пользователь"
+}
+```
 
-### Deployment
+### Формат входящих данных для ChatList:
+```json
+{
+  "type": "chats",
+  "chats": [
+    {"chat_id": "123"},
+    {"chat_id": "456"}
+  ]
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
