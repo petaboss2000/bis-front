@@ -4,9 +4,6 @@ import Chat from "./Chat";
 
 const ChatList = () => {
 
-	// Твой любимый WebSocket, ебись на здоровье
-	// Как доделаешь пиздуй в Chat.jsx
-
 	const usersDivRef = useRef(null);
 	const socket = useRef(null);
 

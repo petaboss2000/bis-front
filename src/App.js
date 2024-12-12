@@ -4,9 +4,6 @@ import ChatPage from './pages/ChatPage';
 import SignInPage from './pages/SignInPage';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-// Так, ну это тебе не нужно, это корневой компонент и роутинг.
-// Иди в pages/ChatListPage.jsx
-
 function App() {
 	return (
 		<div className="App">

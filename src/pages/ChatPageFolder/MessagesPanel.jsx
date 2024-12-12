@@ -4,8 +4,6 @@ import Message from "./Message";
 
 const MessagesPanel = () => {
 
-	// Ура! Работа, специально для тебя, ну тут и без комментов всё ясно, делай что нужно и открывай Message.jsx
-
 	const messagesDivRef = useRef(null);
 	const socket = useRef(null);
 

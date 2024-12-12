@@ -4,8 +4,6 @@ import Cookies from 'js-cookie';
 
 const InputPanel = () => {
 
-	// Это конец на сегодня, просто допиши WS и свободен, молодец!
-
 	const [message, setMessage] = useState("");
 
 	const socket = useRef(null);
