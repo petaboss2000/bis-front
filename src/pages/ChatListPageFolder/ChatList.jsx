@@ -8,7 +8,10 @@ const ChatList = () => {
 	const socket = useRef(null);
 
 	useEffect(() => {
-		socket.current = new WebSocket("http://localhost:5000/ws");
+		const cookieValue = document.cookie
+			.split('; ')
+			.find((row) => row.startsWith('address=')).split('=')[1];
+		socket.current = new WebSocket(`http://localhost:5000/ws/chats/${cookieValue}/`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено");
@@ -37,7 +40,6 @@ const ChatList = () => {
 		};
 
 		return () => {
-			// Очищаем сокет при размонтировании компонента
 			if (socket.current) {
 				socket.current.close();
 			}
@@ -46,13 +48,6 @@ const ChatList = () => {
 
 	return (
 		<div className="ChatList" ref={usersDivRef}>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
-			<Chat chat_id="123654789"/>
 		</div>
 	);
 };

@@ -6,19 +6,14 @@ const SignInPage = () => {
 	const secretDivRef = useRef(null);
 
 	const handleRegister = () => {
-		fetch('http://127.0.0.1:5000/register', {
-			method: 'POST',
+		fetch('http://127.0.0.1:5000/baseApi/register', {method: 'POST'})
+		.then((response) => {
+			console.log(response);
+			return response.json()})
+		.then((data) => {
+			console.log(data);
+			document.cookie = `address=${data.address};max-age=360000;secretPhrase=${data.mnemonic}`
 		})
-
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				const addressDiv = document.querySelector('#addressDiv')
-				addressDiv.textContent = `${data.address}`;
-				const secretDiv = document.querySelector('#secretDiv')
-				secretDiv.textContent = `${data.mnemonic}`;
-				document.cookie = `address=${data.address};max-age=360000;secretPhrase=${data.mnemonic}`
-			})
 	};
 
 

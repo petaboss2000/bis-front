@@ -8,7 +8,10 @@ const MessagesPanel = () => {
 	const socket = useRef(null);
 
 	useEffect(() => {
-		socket.current = new WebSocket("http://localhost:5000/ws");
+		const cookieValue = document.cookie
+			.split('; ')
+			.find((row) => row.startsWith('address=')).split('=')[1];
+		socket.current = new WebSocket(`http://localhost:5000/ws/messages/${cookieValue}`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено");
@@ -16,22 +19,19 @@ const MessagesPanel = () => {
 
 		socket.current.onmessage = function (event) {
 			const data = JSON.parse(event.data);
-			if (data.type === "messages") {
-				messagesDivRef.current.replaceChildren()
-				data.messages.forEach(message => {
-					if (messagesDivRef.current) {
-						const chatComponent = React.createElement(Message, {messageText: message.messageText}, null);
-						if (message.userId === Cookies.get('address')) {
-							Message.classList.add("user_message");
-						} else {
-							Message.classList.add("interlocutor_message");
-						}
-						messagesDivRef.current.appendChild(chatComponent);
-						messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
+			messagesDivRef.current.replaceChildren()
+			data.messages.forEach(message => {
+				if (messagesDivRef.current) {
+					const chatComponent = React.createElement(Message, {messageText: message.messageText}, null);
+					if (message.userId === Cookies.get('address')) {
+						Message.classList.add("user_message");
+					} else {
+						Message.classList.add("interlocutor_message");
 					}
-				});
-			}
-
+					messagesDivRef.current.appendChild(chatComponent);
+					messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
+				}
+			});
 		};
 
 		socket.current.onclose = function (event) {
