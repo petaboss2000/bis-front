@@ -8,10 +8,8 @@ const ChatList = () => {
 	const socket = useRef(null);
 
 	useEffect(() => {
-		const cookieValue = document.cookie
-			.split('; ')
-			.find((row) => row.startsWith('address=')).split('=')[1];
-		socket.current = new WebSocket(`http://localhost:5000/ws/chats/${cookieValue}/`);
+		const cookieValue = Cookies.get('address')
+		socket.current = new WebSocket(`http://localhost:5000/chats/${cookieValue}/`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено");

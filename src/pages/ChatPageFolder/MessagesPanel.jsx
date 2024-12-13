@@ -1,17 +1,17 @@
 import React, {useEffect, useRef} from "react";
 import Cookies from 'js-cookie';
 import Message from "./Message";
+import {useParams} from "react-router";
 
 const MessagesPanel = () => {
 
 	const messagesDivRef = useRef(null);
 	const socket = useRef(null);
 
+	const params = useParams();
+
 	useEffect(() => {
-		const cookieValue = document.cookie
-			.split('; ')
-			.find((row) => row.startsWith('address=')).split('=')[1];
-		socket.current = new WebSocket(`http://localhost:5000/ws/messages/${cookieValue}`);
+		socket.current = new WebSocket(`http://localhost:5000/messages/${params.chat_id}`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено");

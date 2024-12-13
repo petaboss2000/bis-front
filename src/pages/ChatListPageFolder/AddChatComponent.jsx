@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import Cookies from 'js-cookie';
+
 
 const AddChatComponent = () => {
 
@@ -7,7 +9,7 @@ const AddChatComponent = () => {
 	const addChat = () => {
 		fetch('http://127.0.0.1:5000/addUser', {
 			method: 'POST',
-			body: JSON.stringify({address: addUser}),
+			body: JSON.stringify({first_user: Cookies.get('address'), second_user: addUser}),
 		})
 	};
 

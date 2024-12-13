@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import Cookies from 'js-cookie';
+
 
 const LogInPage = () => {
 
@@ -9,7 +11,7 @@ const LogInPage = () => {
 
 			.then((response) => response.json())
 			.then((data) => {
-				document.cookie = `address=${data.address};max-age=360000;secretPhrase=${secret}`
+				Cookies.set('address', `${data.address}`, {expires: 365})
 				window.location.href = '/'
 			})
 	};

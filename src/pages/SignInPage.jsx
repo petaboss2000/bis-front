@@ -12,7 +12,10 @@ const SignInPage = () => {
 			return response.json()})
 		.then((data) => {
 			console.log(data);
-			document.cookie = `address=${data.address};max-age=360000;secretPhrase=${data.mnemonic}`
+			const addressDiv = document.querySelector('#addressDiv')
+			addressDiv.textContent = `${data.address}`;
+			const secretDiv = document.querySelector('#secretDiv')
+			secretDiv.textContent = `${data.mnemonic}`;
 		})
 	};
 

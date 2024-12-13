@@ -13,15 +13,14 @@ const InputPanel = () => {
 	socket.current.onopen = function () {
 		console.log("Соединение установлено");
 		sendMessage("");
-		socket.current.send(JSON.stringify({address: document.cookie.split(";")[0].split("=")[1], type: "init"}))
+		socket.current.send(JSON.stringify({address: Cookies.get("address")}));
 	};
 
 	const sendMessage = () => {
 		if (!message.trim()) return;
 		if (socket.current && socket.current.readyState === WebSocket.OPEN) {
 			socket.current.send(JSON.stringify({
-				type: "massage",
-				user_id: `${Cookies.get('address')}`,
+				user_address: `${Cookies.get('address')}`,
 				text: `${message}`
 			}));
 			setMessage("");
