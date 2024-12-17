@@ -19,13 +19,13 @@ const ChatList = () => {
 			console.log("Get message");
 			console.log(event.data);
 			const data = JSON.parse(event.data);
-				usersDivRef.current.replaceChildren()
-				data.chats.forEach(chat => {
-					if (usersDivRef.current) {
-						const chatComponent = React.createElement(Chat, {chat_id: chat.chat_id}, null);
-						usersDivRef.current.appendChild(chatComponent);
-					}
-				});
+			usersDivRef.current.replaceChildren()
+			data.chats.forEach(chat => {
+				if (usersDivRef.current) {
+					const chatComponent = React.createElement(Chat, {chat_id: chat.chat_id}, null);
+					usersDivRef.current.appendChild(chatComponent);
+				}
+			});
 		};
 
 		socket.current.onclose = function (event) {
