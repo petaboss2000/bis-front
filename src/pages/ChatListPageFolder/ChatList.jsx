@@ -9,15 +9,16 @@ const ChatList = () => {
 
 	useEffect(() => {
 		const cookieValue = Cookies.get('address')
-		socket.current = new WebSocket(`http://localhost:5000/chats/${cookieValue}/`);
+		socket.current = new WebSocket(`ws://localhost:5000/chats/${cookieValue}`);
 
 		socket.current.onopen = function () {
-			console.log("Соединение установлено");
+			console.log("Соединение установлено!!");
 		};
 
 		socket.current.onmessage = function (event) {
+			console.log("Get message");
+			console.log(event.data);
 			const data = JSON.parse(event.data);
-			if (data.type === "chats") {
 				usersDivRef.current.replaceChildren()
 				data.chats.forEach(chat => {
 					if (usersDivRef.current) {
@@ -25,8 +26,6 @@ const ChatList = () => {
 						usersDivRef.current.appendChild(chatComponent);
 					}
 				});
-			}
-
 		};
 
 		socket.current.onclose = function (event) {

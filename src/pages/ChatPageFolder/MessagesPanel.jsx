@@ -11,7 +11,7 @@ const MessagesPanel = () => {
 	const params = useParams();
 
 	useEffect(() => {
-		socket.current = new WebSocket(`http://localhost:5000/messages/${params.chat_id}`);
+		socket.current = new WebSocket(`ws://localhost:5000/messages/${params.chat_id}`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено");

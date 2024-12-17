@@ -47,6 +47,7 @@ body {
     gap: 5px;
     width: 85%;
     background-color: #292929;
+    color: white;
 }
 
 #AddChatInput {

@@ -7,10 +7,7 @@ const AddChatComponent = () => {
 	const [addUser, setAddUser] = useState("");
 
 	const addChat = () => {
-		fetch('http://127.0.0.1:5000/addUser', {
-			method: 'POST',
-			body: JSON.stringify({first_user: Cookies.get('address'), second_user: addUser}),
-		})
+		fetch(`http://127.0.0.1:5000/baseApi/add_user/${Cookies.get('address')}/${addUser}`, {method: 'POST'})
 	};
 
 	return (
