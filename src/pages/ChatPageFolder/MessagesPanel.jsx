@@ -1,59 +1,64 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie';
 import Message from "./Message";
-import {useParams} from "react-router";
+import { useParams } from "react-router";
 
 const MessagesPanel = () => {
-
-	const messagesDivRef = useRef(null);
+	const [messages, setMessages] = useState([]); // Состояние для хранения сообщений
 	const socket = useRef(null);
-
 	const params = useParams();
+	const messagesDivRef = useRef(null);
 
 	useEffect(() => {
+		// Подключение WebSocket
 		socket.current = new WebSocket(`ws://localhost:5000/messages/${params.chat_id}`);
 
-		socket.current.onopen = function () {
+		socket.current.onopen = () => {
 			console.log("Соединение установлено");
 		};
 
-		socket.current.onmessage = function (event) {
+		socket.current.onmessage = (event) => {
 			const data = JSON.parse(event.data);
-			messagesDivRef.current.replaceChildren()
-			data.messages.forEach(message => {
-				if (messagesDivRef.current) {
-					const chatComponent = React.createElement(Message, {messageText: message.messageText}, null);
-					if (message.userId === Cookies.get('address')) {
-						Message.classList.add("user_message");
-					} else {
-						Message.classList.add("interlocutor_message");
-					}
-					messagesDivRef.current.appendChild(chatComponent);
-					messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
-				}
-			});
+
+			// Обновляем состояние сообщений
+			setMessages(data.messages);
 		};
 
-		socket.current.onclose = function (event) {
+		socket.current.onclose = () => {
 			console.log("Соединение закрыто");
 		};
 
-		socket.current.onerror = function (error) {
+		socket.current.onerror = (error) => {
 			console.log(`Ошибка: ${error.message}`);
 		};
 
 		return () => {
-			// Очищаем сокет при размонтировании компонента
 			if (socket.current) {
 				socket.current.close();
 			}
 		};
-	}, []);
+	}, [params.chat_id]);
+
+	useEffect(() => {
+		// Автопрокрутка вниз при обновлении сообщений
+		if (messagesDivRef.current) {
+			messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
+		}
+	}, [messages]);
 
 	return (
 		<div className="MessagesPanel" ref={messagesDivRef}>
-			<Message className="user_message" messageText="Привет"/>
-			<Message className="interlocutor_message" messageText="Как дела?"/>
+			{messages.map((message, index) => (
+				<Message
+					key={index}
+					messageText={message.messageText}
+					className={
+						message.userId === Cookies.get('address')
+							? "user_message"
+							: "interlocutor_message"
+					}
+				/>
+			))}
 		</div>
 	);
 };
