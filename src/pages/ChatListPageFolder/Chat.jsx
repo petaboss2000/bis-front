@@ -5,7 +5,7 @@ const Chat = (props) => {
 
 	return (
 		<Link className="Chat" to={`/chat/${props.chat_id}`}>
-			{props.chat_id}
+			{props.chat_name}
 		</Link>
 	);
 };

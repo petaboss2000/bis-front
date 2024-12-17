@@ -10,7 +10,6 @@ const MessagesPanel = () => {
 	const messagesDivRef = useRef(null);
 
 	useEffect(() => {
-		// Подключение WebSocket
 		socket.current = new WebSocket(`ws://localhost:5000/messages/${params.chat_id}`);
 
 		socket.current.onopen = () => {
@@ -19,8 +18,6 @@ const MessagesPanel = () => {
 
 		socket.current.onmessage = (event) => {
 			const data = JSON.parse(event.data);
-
-			// Обновляем состояние сообщений
 			setMessages(data.messages);
 		};
 
@@ -40,7 +37,6 @@ const MessagesPanel = () => {
 	}, [params.chat_id]);
 
 	useEffect(() => {
-		// Автопрокрутка вниз при обновлении сообщений
 		if (messagesDivRef.current) {
 			messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
 		}
