@@ -1,41 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Cookies from 'js-cookie';
 import Chat from "./Chat";
 
 const ChatList = () => {
+
 	const [chats, setChats] = useState([]); // Состояние для списка чатов
-	const socket = useRef(null);
 	const usersDivRef = useRef(null);
+	const socket = useRef(null);
 
 	useEffect(() => {
-		const cookieValue = Cookies.get('address');
-
-		// Подключение к WebSocket
+		const cookieValue = Cookies.get('address')
 		socket.current = new WebSocket(`ws://localhost:5000/chats/${cookieValue}`);
 
-		socket.current.onopen = () => {
+		socket.current.onopen = function () {
 			console.log("Соединение установлено!!");
 		};
 
-		socket.current.onmessage = (event) => {
-			console.log("Получены данные");
+		socket.current.onmessage = function (event) {
+			console.log("Get message");
 			console.log(event.data);
-
 			const data = JSON.parse(event.data);
-
-			// Обновляем состояние чатов
 			setChats(data.chats);
 		};
 
-		socket.current.onclose = () => {
+		socket.current.onclose = function (event) {
 			console.log("Соединение закрыто");
 		};
 
-		socket.current.onerror = (error) => {
+		socket.current.onerror = function (error) {
 			console.log(`Ошибка: ${error.message}`);
 		};
 
-		// Закрываем соединение при размонтировании компонента
 		return () => {
 			if (socket.current) {
 				socket.current.close();
