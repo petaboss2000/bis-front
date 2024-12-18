@@ -25,6 +25,7 @@ const SignInPage = () => {
 	return (
 		<div className="SignInPage">
 			<h1 id="registration_h">Регистрация</h1>
+			<h3 id="signIn_h3">Придумайте себе имя</h3>
 			<input id="name_input"
 				   type="text"
 				   value={name}

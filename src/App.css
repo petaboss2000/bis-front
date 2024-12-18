@@ -231,7 +231,7 @@ h1, h3 {
     color: #3e79ff;
 }
 
-#login_h3 {
+#login_h3, #signIn_h3 {
     font-size: 20px;
     color: #555;
 }
@@ -266,7 +266,7 @@ h1, h3 {
     color: #333;
 }
 
-#login_input {
+#login_input, #name_input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
