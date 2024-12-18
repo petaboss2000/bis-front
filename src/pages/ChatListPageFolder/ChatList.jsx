@@ -4,7 +4,7 @@ import Chat from "./Chat";
 
 const ChatList = () => {
 
-	const [chats, setChats] = useState([]); // Состояние для списка чатов
+	const [chats, setChats] = useState([]);
 	const usersDivRef = useRef(null);
 	const socket = useRef(null);
 
@@ -41,7 +41,7 @@ const ChatList = () => {
 	return (
 		<div className="ChatList" ref={usersDivRef}>
 			{chats.map((chat) => (
-				<Chat key={chat.chat_id} chat_id={chat.chat_id} />
+				<Chat key={chat.chat_id} chat_id={chat.chat_id} chat_name={chat.chat_name} />
 			))}
 		</div>
 	);
