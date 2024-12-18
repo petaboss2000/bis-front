@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 import Cookies from 'js-cookie';
 import {useParams} from "react-router";
 
@@ -6,24 +6,12 @@ import {useParams} from "react-router";
 const InputPanel = () => {
 
     const [message, setMessage] = useState("");
-    const socket = useRef(null);
     const params = useParams();
-
-    socket.current = new WebSocket(`ws://localhost:5000/messages/${params.chat_id}`);
-
-    socket.current.onopen = function () {
-        console.log("Соединение установлено");
-    };
 
     const sendMessage = () => {
         if (!message.trim()) return;
-        if (socket.current && socket.current.readyState === WebSocket.OPEN) {
-            socket.current.send(JSON.stringify({
-                user_address: `${Cookies.get('address')}`,
-                text: `${message}`
-            }));
-            setMessage("");
-        }
+        fetch(`http://127.0.0.1:5000/baseApi/add_user/${params.chat_id}/${Cookies.get('address')}/${message}`, {method: 'POST'})
+        setMessage("");
     };
 
     return (
