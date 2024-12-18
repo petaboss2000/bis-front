@@ -1,12 +1,13 @@
-import React, {useRef } from "react";
+import React, {useRef, useState} from "react";
 
 const SignInPage = () => {
 
 	const addressDivRef = useRef("");
 	const secretDivRef = useRef("");
+	const [name, setName] = useState("");
 
 	const handleRegister = () => {
-		fetch('http://127.0.0.1:5000/baseApi/register', {method: 'POST'})
+		fetch(`http://127.0.0.1:5000/baseApi/register/${name}`, {method: 'POST'})
 		.then((response) => {
 			console.log(response);
 			return response.json()})
@@ -24,6 +25,11 @@ const SignInPage = () => {
 	return (
 		<div className="SignInPage">
 			<h1 id="registration_h">Регистрация</h1>
+			<input id="name_input"
+				   type="text"
+				   value={name}
+				   onChange={(e) => setName(e.target.value)}
+			/>
 			<button id="registration_button" onClick={handleRegister}>Зарегистрироваться</button>
 			<p id="registration_p">Запомните или запишите ваши данные для входа:</p>
 			<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
