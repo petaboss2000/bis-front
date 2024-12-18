@@ -8,9 +8,11 @@ const InputPanel = () => {
     const [message, setMessage] = useState("");
     const params = useParams();
 
+
+
     const sendMessage = () => {
         if (!message.trim()) return;
-        fetch(`http://127.0.0.1:5000/baseApi/add_user/${params.chat_id}/${Cookies.get('address')}/${message}`, {method: 'POST'})
+        fetch(`http://127.0.0.1:5000/baseApi/messages/${params.chat_id}/${Cookies.get('address')}/${message}`, {method: 'POST'})
         setMessage("");
     };
 
