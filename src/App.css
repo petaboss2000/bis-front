@@ -132,6 +132,18 @@ font-size: 24px;
     color: white;
 }
 
+.CallButton{
+    background-image: url("./images/CallButtonIcon.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
 .MessagesPanel {
     min-height: 87.48vh;
     overflow-y: auto;
