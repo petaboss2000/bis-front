@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 
 
 const InputPanel = () => {
-
+    const [file, setFile] = useState(null);
     const [message, setMessage] = useState("");
     const params = useParams();
 
@@ -23,9 +23,15 @@ const InputPanel = () => {
                    value={message}
                    placeholder="Введите сообщение"
                    onChange={(e) => setMessage(e.target.value)}/>
-            <button id="SendMessageButton" onClick={sendMessage}>{">"}</button>
+            {(message === "" || file === null)
+                ? <button id="SendMessageButton" onClick={sendMessage}/>
+                : <>
+                    <input type="file" id="AddFileButton" onChange={e => setFile(e.target.value)}/>
+                    <button id="RecordVoiseButton" onClick={sendMessage}/></>
+            }
         </div>
-    );
+    )
+        ;
 };
 
 export default InputPanel;
