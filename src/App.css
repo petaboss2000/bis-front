@@ -132,7 +132,7 @@ font-size: 24px;
     color: white;
 }
 
-.CallButton{
+#CallButton{
     background-image: url("./images/CallButtonIcon.svg");
     background-size: contain;
     background-position: center;
@@ -142,6 +142,7 @@ font-size: 24px;
     border: none;
     cursor: pointer;
     background-color: transparent;
+    margin: 0;
 }
 
 .MessagesPanel {
@@ -196,11 +197,49 @@ font-size: 24px;
     justify-content: space-between;
 }
 
+.UploadedFile{
+    position: fixed;
+    bottom: 6% ;
+    z-index: 1001;
+    width: 96%;
+    background-color: #555;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.FileIcon{
+    height: 40px;
+    width: 40px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.FileName{
+    color: white;
+}
+
+.DeleteFileButton{
+    background-image: url("./images/Trash.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
 #MessageInput {
     height: 40px;
     border: none;
     width: 100%;
     background-color: #292929;
+    color: white;
 }
 
 #MessageInput:focus {
@@ -225,6 +264,7 @@ font-size: 24px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    padding-inline: 7%;
     width: 40px;
     height: 40px;
     border: none;
@@ -233,6 +273,10 @@ font-size: 24px;
 }
 
 #AddFileButton{
+    display: none;
+}
+
+#AddFileButtonIMG{
     background-image: url("./images/File.svg");
     background-size: contain;
     background-position: center;
