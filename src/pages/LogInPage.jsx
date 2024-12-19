@@ -7,14 +7,14 @@ const LogInPage = () => {
 	const [secret, setSecret] = useState("");
 
 	const handleRegister = () => {
-		fetch(`http://127.0.0.1:5000/baseApi/login/${secret}`, {method: 'POST'})
+		fetch(`http://127.0.0.1:5000/users/login/${secret}`, {method: 'POST'})
 
 			.then((response) => response.json())
 			.then((data) => {
-				Cookies.set('address', `${data.address}`, {expires: 365})
-				console.log(Cookies.get());
-				console.log("fwefwwf");
-				window.location.href = '/'
+				if (data.address !== undefined){
+					Cookies.set('address', `${data.address}`, {expires: 365})
+					window.location.href = '/'
+				}
 			})
 	};
 

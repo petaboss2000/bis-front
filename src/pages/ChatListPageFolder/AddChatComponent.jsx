@@ -8,7 +8,7 @@ const AddChatComponent = () => {
 	const [addUser, setAddUser] = useState("");
 
 	const addChat = () => {
-		fetch(`http://127.0.0.1:5000/baseApi/add_user/${Cookies.get('address')}/${addUser}`, {method: 'POST'})
+		fetch(`http://127.0.0.1:5000/chats/add_chat/${Cookies.get('address')}/${addUser}`, {method: 'POST'})
 	};
 
 	return (

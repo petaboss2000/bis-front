@@ -10,7 +10,7 @@ const ChatList = () => {
 
 	useEffect(() => {
 		const cookieValue = Cookies.get('address')
-		socket.current = new WebSocket(`ws://localhost:5000/chats/${cookieValue}`);
+		socket.current = new WebSocket(`ws://localhost:5000/chats/ws/${cookieValue}`);
 
 		socket.current.onopen = function () {
 			console.log("Соединение установлено!!");

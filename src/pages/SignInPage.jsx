@@ -11,19 +11,21 @@ const SignInPage = () => {
 
 
 	const handleRegister = () => {
-		fetch(`http://127.0.0.1:5000/baseApi/register/${name}`, {method: 'POST'})
+		fetch(`http://127.0.0.1:5000/users/signup/${name}`, {method: 'POST'})
 			.then((response) => {
 				console.log(response);
 				return response.json()
 			})
 			.then((data) => {
+				if (data.address !== undefined){
+					const addressDiv = document.querySelector('.addressDiv')
+					addressDiv.textContent = `${data.address}`;
+					setAddress(data.address);
+					const secretDiv = document.querySelector('.secretDiv')
+					secretDiv.textContent = `${data.mnemonic}`;
+					setSecret(data.mnemonic)
+				}
 				console.log(data);
-				const addressDiv = document.querySelector('.addressDiv')
-				addressDiv.textContent = `${data.address}`;
-				setAddress(data.address);
-				const secretDiv = document.querySelector('.secretDiv')
-				secretDiv.textContent = `${data.mnemonic}`;
-				setSecret(data.mnemonic)
 			})
 	};
 
@@ -39,20 +41,8 @@ const SignInPage = () => {
 				   onChange={(e) => setName(e.target.value)}
 			/>
 			<button id="registration_button" onClick={handleRegister}>Зарегистрироваться</button>
-			{(secret)
-				?
-				<>
-					<p id="registration_p">Запомните или запишите ваши данные для входа:</p>
-					<CopyToClipboard text={address}>
-						<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
-					</CopyToClipboard>
-					<CopyToClipboard text={secret}>
-						<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
-					</CopyToClipboard>
-				</>
-				: null}
-
 			<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
+			<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
 			<a id="registration_button" href={"/logIn"}>Вход</a>
 		</div>
 	);
