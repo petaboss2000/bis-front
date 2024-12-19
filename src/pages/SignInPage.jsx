@@ -1,7 +1,5 @@
 import React, {useRef, useState} from "react";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import Cookies from "js-cookie";
-
 
 const SignInPage = () => {
 
@@ -28,9 +26,6 @@ const SignInPage = () => {
 				setSecret(data.mnemonic)
 			})
 	};
-
-	const addressDiv = document.querySelector('.addressDiv')
-	const secretDiv = document.querySelector('.secretDiv')
 
 
 
