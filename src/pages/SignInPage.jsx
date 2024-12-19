@@ -1,24 +1,36 @@
 import React, {useRef, useState} from "react";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import Cookies from "js-cookie";
+
 
 const SignInPage = () => {
 
 	const addressDivRef = useRef("");
 	const secretDivRef = useRef("");
 	const [name, setName] = useState("");
+	const [address, setAddress] = useState("");
+	const [secret, setSecret] = useState("");
+
 
 	const handleRegister = () => {
 		fetch(`http://127.0.0.1:5000/baseApi/register/${name}`, {method: 'POST'})
-		.then((response) => {
-			console.log(response);
-			return response.json()})
-		.then((data) => {
-			console.log(data);
-			const addressDiv = document.querySelector('.addressDiv')
-			addressDiv.textContent = `${data.address}`;
-			const secretDiv = document.querySelector('.secretDiv')
-			secretDiv.textContent = `${data.mnemonic}`;
-		})
+			.then((response) => {
+				console.log(response);
+				return response.json()
+			})
+			.then((data) => {
+				console.log(data);
+				const addressDiv = document.querySelector('.addressDiv')
+				addressDiv.textContent = `${data.address}`;
+				setAddress(data.address);
+				const secretDiv = document.querySelector('.secretDiv')
+				secretDiv.textContent = `${data.mnemonic}`;
+				setSecret(data.mnemonic)
+			})
 	};
+
+	const addressDiv = document.querySelector('.addressDiv')
+	const secretDiv = document.querySelector('.secretDiv')
 
 
 
@@ -32,8 +44,19 @@ const SignInPage = () => {
 				   onChange={(e) => setName(e.target.value)}
 			/>
 			<button id="registration_button" onClick={handleRegister}>Зарегистрироваться</button>
-			<p id="registration_p">Запомните или запишите ваши данные для входа:</p>
-			<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
+			{(secret)
+				?
+				<>
+					<p id="registration_p">Запомните или запишите ваши данные для входа:</p>
+					<CopyToClipboard text={address}>
+						<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
+					</CopyToClipboard>
+					<CopyToClipboard text={secret}>
+						<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
+					</CopyToClipboard>
+				</>
+				: null}
+
 			<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
 			<a id="registration_button" href={"/logIn"}>Вход</a>
 		</div>
