@@ -10,7 +10,7 @@ const MessagesPanel = () => {
 	const messagesDivRef = useRef(null);
 
 	useEffect(() => {
-		socket.current = new WebSocket(`ws://localhost:5000/messages/ws/${params.chat_id}`);
+		socket.current = new WebSocket(`ws://176.114.91.95:8000/messages/ws/${params.chat_id}`);
 
 		socket.current.onopen = () => {
 			console.log("Соединение установлено");

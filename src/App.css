@@ -22,7 +22,8 @@ body {
     color: white;
     align-items: center;
     justify-content: center;
-    padding-top: 3px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     background-color: #292929;
     font-size: 10px ;
 }

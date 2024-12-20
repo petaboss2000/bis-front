@@ -7,7 +7,7 @@ const LogInPage = () => {
 	const [secret, setSecret] = useState("");
 
 	const handleRegister = () => {
-		fetch(`http://127.0.0.1:5000/users/login/${secret}`, {method: 'POST'})
+		fetch(`http://176.114.91.95:8000/users/login/${secret}`, {method: 'POST'})
 
 			.then((response) => response.json())
 			.then((data) => {

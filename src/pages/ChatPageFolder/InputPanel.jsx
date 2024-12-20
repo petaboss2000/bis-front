@@ -29,7 +29,7 @@ const InputPanel = () => {
 
     const sendMessage = () => {
         if (!message.trim()) return;
-        axios.post(`http://127.0.0.1:5000/messages/send_message/`,
+        axios.post(`http://176.114.91.95:8000/messages/send_message/`,
             {
                 chat_id: params.chat_id,
                 user: Cookies.get('address'),
