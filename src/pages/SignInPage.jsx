@@ -41,8 +41,18 @@ const SignInPage = () => {
 				   onChange={(e) => setName(e.target.value)}
 			/>
 			<button id="registration_button" onClick={handleRegister}>Зарегистрироваться</button>
-			<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
-			<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
+			{(secret)
+				?
+				<>
+					<p id="registration_p">Запомните или запишите ваши данные для входа:</p>
+					<CopyToClipboard text={address}>
+						<p id="registration_p_important" className="addressDiv" ref={addressDivRef}>{address}</p>
+					</CopyToClipboard>
+					<CopyToClipboard text={secret}>
+						<p id="registration_p_important" className="secretDiv" ref={secretDivRef}>{secret}</p>
+					</CopyToClipboard>
+				</>
+				: null}
 			<a id="registration_button" href={"/logIn"}>Вход</a>
 		</div>
 	);
