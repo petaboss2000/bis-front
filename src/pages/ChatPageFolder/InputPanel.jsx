@@ -34,7 +34,8 @@ const InputPanel = () => {
             {
                 chat_id: params.chat_id,
                 user: Cookies.get('address'),
-                text: message
+                text: message,
+                file: JSON.stringify(file.file)
             },
             {headers: {'Content-Type': 'application/json'}})
         setMessage("");
@@ -68,7 +69,8 @@ const InputPanel = () => {
                         <input type="file" id="AddFileButton" name="AddFileButton"
                                onChange={handleChange}></input>
                         <label id="AddFileButtonIMG" htmlFor="AddFileButton"/>
-                        <button id="RecordVoiseButton" onClick={sendMessage}/>
+                        <button id="SendMessageButton" onClick={sendMessage}/>
+                        {/*<button id="RecordVoiseButton" onClick={sendMessage}/>*/}
                     </>
                     : <button id="SendMessageButton" onClick={sendMessage}/>
                 }
