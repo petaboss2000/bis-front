@@ -11,7 +11,7 @@ const SignInPage = () => {
 
 
 	const handleRegister = () => {
-		fetch(`http://176.114.91.95:8000/users/signup/${name}`, {method: 'POST'})
+		fetch(`https://bis-api.online/users/signup/${name}`, {method: 'POST'})
 			.then((response) => {
 				console.log(response);
 				return response.json()
@@ -33,7 +33,7 @@ const SignInPage = () => {
 
 	return (
 		<div className="SignInPage">
-			<h1 id="registration_h">Регистрация!</h1>
+			<h1 id="registration_h">Регистрация</h1>
 			<h3 id="signIn_h3">Придумайте себе имя</h3>
 			<input id="name_input"
 				   type="text"
@@ -41,12 +41,8 @@ const SignInPage = () => {
 				   onChange={(e) => setName(e.target.value)}
 			/>
 			<button id="registration_button" onClick={handleRegister}>Зарегистрироваться</button>
-			<CopyToClipboard text={address}>
-				<p id="registration_p_important" className="addressDiv" ref={addressDivRef}>{address}</p>
-			</CopyToClipboard>
-			<CopyToClipboard text={secret}>
-				<p id="registration_p_important" className="secretDiv" ref={secretDivRef}>{secret}</p>
-			</CopyToClipboard>
+			<p id="registration_p_important" className="secretDiv" ref={secretDivRef}></p>
+			<p id="registration_p_important" className="addressDiv" ref={addressDivRef}></p>
 			<a id="registration_button" href={"/logIn"}>Вход</a>
 		</div>
 	);
