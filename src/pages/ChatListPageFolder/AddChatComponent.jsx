@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Cookies from 'js-cookie';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 
 const AddChatComponent = () => {
@@ -7,7 +8,7 @@ const AddChatComponent = () => {
 	const [addUser, setAddUser] = useState("");
 
 	const addChat = () => {
-		fetch(`http://176.114.91.95:8000/chats/add_chat/${Cookies.get('address')}/${addUser}`, {method: 'POST'})
+		fetch(`https://bis-api.online/chats/add_chat/${Cookies.get('address')}/${addUser}`, {method: 'POST'})
 	};
 
 	return (
