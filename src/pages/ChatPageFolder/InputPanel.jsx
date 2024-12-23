@@ -34,8 +34,7 @@ const InputPanel = () => {
             {
                 chat_id: params.chat_id,
                 user: Cookies.get('address'),
-                text: message,
-                file: JSON.stringify(file.file)
+                text: message
             },
             {headers: {'Content-Type': 'application/json'}})
         setMessage("");

@@ -7,7 +7,7 @@ const ChatIdName = () => {
 
 	return (
 		<div className="ChatIdName">
-			{params.chat_id}
+			{params.chat_name}
 		</div>
 	);
 };

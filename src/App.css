@@ -7,7 +7,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #0D0D0D;
+    background-image: url("./images/ChatBackground.png");
 }
 
 .App {

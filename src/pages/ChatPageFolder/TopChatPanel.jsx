@@ -15,7 +15,7 @@ const TopChatPanel = () => {
 		<div className="TopChatPanel">
 			<ToChatListButton/>
 			<ChatIdName/>
-			<Link id="CallButton" to={`/call/${params.chat_id}`}/>
+			<Link id="CallButton" to={`/call/${params.chat_name}`}/>
 		</div>
 	);
 };
