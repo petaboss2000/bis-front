@@ -266,7 +266,7 @@ font-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
     width: 30px;
-    height: 30px;
+    height: 40px;
     border: none;
     cursor: pointer;
     background-color: transparent;
@@ -299,6 +299,7 @@ font-size: 12px;
     border: none;
     cursor: pointer;
     background-color: transparent;
+    margin-right: 10px;
 }
 
 /* Регистрация и вход */
