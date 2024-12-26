@@ -1,103 +1,82 @@
-import React, { useState } from "react";
-import Cookies from "js-cookie";
-import { useParams } from "react-router";
+import React, {useState} from "react";
+import Cookies from 'js-cookie';
+import {useParams} from "react-router";
 import FileAlt from "../../images/FileAlt.svg";
-import axios from "axios";
+import axios from "axios"
 
 const InputPanel = () => {
     const [file, setFile] = useState(null);
-    const [isImage, setIsImage] = useState(false);
-    const [message, setMessage] = useState("");
-    const params = useParams();
+    const [isImage, setIsImage] = useState(false); // Добавляем состояние для определения, является ли файл изображением
 
     const handleChange = (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
-            const fileExtension = selectedFile.type.split("/")[1];
-            setIsImage(["png", "jpg", "jpeg", "gif"].includes(fileExtension));
+            const fileExtension = selectedFile.type.split('/')[1];
+            setIsImage(fileExtension === 'png' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'gif');
 
             setFile({
                 file: selectedFile,
                 url: URL.createObjectURL(selectedFile),
                 name: selectedFile.name,
-                type: fileExtension,
+                type: fileExtension
             });
         }
     };
 
-    const sendMessage = async () => {
-        if (!message.trim() && !file) return;
 
-        const formData = new FormData();
-        formData.append("chat_id", params.chat_id);
-        formData.append("user", Cookies.get("address"));
-        formData.append("text", message);
+    const [message, setMessage] = useState("");
+    const params = useParams();
 
-        if (file) {
-            formData.append("file", file.file);
-        }
 
-        const response = await axios.post(
-            "https://bis-api.online/messages/send_message/",
-            formData,
+    const sendMessage = () => {
+        if (!message.trim()) return;
+        axios.post(`https://bis-api.online/messages/send_message/`,
             {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    ...axios.defaults.headers.common,
-                },
-            }
-        );
-        console.log(response.data);
-        resetInput();
-    };
-
-    const resetInput = () => {
+                chat_id: params.chat_id,
+                user: Cookies.get('address'),
+                text: message
+            },
+            {headers: {'Content-Type': 'application/json'}})
         setMessage("");
-        setFile(null);
     };
 
     return (
         <>
-            {file && (
-                <div className="UploadedFile">
+            {(file != null)
+                ? <div className="UploadedFile">
                     <img
-                        src={isImage ? file.url : FileAlt}
+                        src={isImage
+                            ? file.url
+                            : FileAlt}
                         alt="file"
                         className="FileIcon"
                     />
                     <div className="FileName">{file.name}</div>
-                    <button className="DeleteFileButton" onClick={() => setFile(null)}>
-                        ×
-                    </button>
+                    <button className="DeleteFileButton" onClick={() => setFile(null)}></button>
                 </div>
-            )}
+                : null}
 
             <div className="InputPanel">
-                <input
-                    id="MessageInput"
-                    type="text"
-                    value={message}
-                    placeholder="Введите сообщение"
-                    onChange={(e) => setMessage(e.target.value)}
-                />
+                <input id="MessageInput"
+                       type="text"
+                       value={message}
+                       placeholder="Введите сообщение"
+                       onChange={(e) => setMessage(e.target.value)}/>
 
-                {(!message && !file) ? (
-                    <>
-                        <input
-                            type="file"
-                            id="AddFileButton"
-                            name="AddFileButton"
-                            onChange={handleChange}
-                            hidden
-                        />
-                        <label id="AddFileButtonIMG" htmlFor="AddFileButton" />
+                {(message === "" && file === null)
+                    ? <>
+                        <input type="file" id="AddFileButton" name="AddFileButton"
+                               onChange={handleChange}></input>
+                        <label id="AddFileButtonIMG" htmlFor="AddFileButton"/>
+                        <button id="SendMessageButton" onClick={sendMessage}/>
+                        {/*<button id="RecordVoiseButton" onClick={sendMessage}/>*/}
                     </>
-                ) : null}
-
-                <button id="SendMessageButton" onClick={sendMessage} />
+                    : <button id="SendMessageButton" onClick={sendMessage}/>
+                }
             </div>
         </>
-    );
+    )
+        ;
 };
 
 export default InputPanel;

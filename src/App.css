@@ -382,8 +382,81 @@ button, a, input {
     transition: all 0.3s ease;
 }
 
-.CallPage{
-    display: block;
+/*Не влезай, убьёт!!!*/
+
+.CallPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
     background-color: #292929;
+    color: white;
+    padding: 20px;
 }
+
+.CallName {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.CallInformation {
+    font-size: 16px;
+    color: #cccccc;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.AudioContainer {
+    display: none; /* Аудио элементы скрыты, так как они работают в фоновом режиме */
+}
+
+.CallButtons {
+    display: flex;
+    gap: 15px;
+}
+
+.VoisButton {
+    background-color: #3e79ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.StartCallButton{
+    background-color: #3e79ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.VoisButton:hover {
+    background-color: #2a5fc4;
+}
+
+.CallOffButton {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.CallOffButton:hover {
+    background-color: #d13838;
+}
+
+
